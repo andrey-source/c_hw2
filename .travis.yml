@@ -16,16 +16,16 @@ jobs:
       - cd build
       - cmake ..
       - make
-#     - name: "StreeTest"
-#     script:
-#     - python3 create_test_data.py
-#     - ./hw2
-#     - rm test_data.txt
-#     -name: "Gtest"
-#     script:
-#     - ./test_input
-#     - ./test_naive_transpose
-#     - ./test_parallel_transpose
+    - name: "StreeTest"
+    script:
+    - python3 create_test_data.py
+    - ./hw2
+    - rm test_data.txt
+    -name: "Gtest"
+    script:
+    - ./test_input
+    - ./test_naive_transpose
+    - ./test_parallel_transpose
 #     - curl -Os https://uploader.codecov.io/latest/linux/codecov
 #     - chmod +x codecov
 #     - ./codecov -f<(gcovr -x)

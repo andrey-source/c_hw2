@@ -1,5 +1,7 @@
 os: linux
 dist: focal
+
+
 language: cpp
 
 install:
@@ -16,10 +18,10 @@ jobs:
       - cd build
       - cmake ..
       - make
-    - name: "StreeTest"
+    - name: "StressTest"
     script:
     - python3 create_test_data.py
-    - ./hw2
+    - valgrind --error-exitcode=1 --leak-check=full -q ./hw2
     - rm test_data.txt
     -name: "Gtest"
     script:

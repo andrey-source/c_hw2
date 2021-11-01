@@ -9,13 +9,13 @@ install:
 - sudo apt install python3-pip
 - sudo pip install numpy
 
-# jobs:
-#   - stage: Build
-#     script:
-#       - mkdir build
-#       - cd build
-#       - cmake ..
-#       - make
+jobs:
+  - stage: Build
+    script:
+      - mkdir build
+      - cd build
+      - cmake ..
+      - make
 #     - name: "StreeTest"
 #     script:
 #     - python3 create_test_data.py

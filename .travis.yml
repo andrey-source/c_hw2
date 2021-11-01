@@ -1,0 +1,28 @@
+os: linux
+dist: focal
+language: cpp
+
+install:
+- sudo apt-get update
+- sudo apt-get install --yes libgtest-dev
+- sudo apt-get install --yes gcovr
+- sudo apt install python3-pip
+- sudo pip install numpy
+jobs:
+  - stage: Build
+    script:
+      - mkdir build
+      - cd build
+      - cmake ..
+      - make
+    - name: "StreeTest"
+    script:
+    - python3 create_test_data.py
+    - ./hw2
+    - rm test_data.txt
+    -name: "Gtest"
+    script:
+    - ./test_input
+    - ./test_naive_transpose
+    - ./test_parallel_transpose
+    - curl -Os https://uploader.codecov.io/latest/linux/codecov

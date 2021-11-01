@@ -26,3 +26,5 @@ jobs:
     - ./test_naive_transpose
     - ./test_parallel_transpose
     - curl -Os https://uploader.codecov.io/latest/linux/codecov
+    - chmod +x codecov
+    - ./codecov -f<(gcovr -x)

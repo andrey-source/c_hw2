@@ -62,7 +62,6 @@ TEST (NAIVE_TRASPOSE, CHECK_RESIZE)
     EXPECT_EQ(n_rows, 2);
     EXPECT_EQ(n_columns, 3);
     free(matrix);
-
 }
 
 int main(int argc, char** argv)

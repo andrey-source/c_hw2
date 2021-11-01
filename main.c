@@ -23,7 +23,7 @@
 int main()
 {
     FILE *f;
-    f = fopen("../test_data.txt", "r");
+    f = fopen("test_data.txt", "r");
     if (!f)
         return EXIT_FAILURE;
 

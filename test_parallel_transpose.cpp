@@ -47,7 +47,6 @@ TEST (PARALLEL_TRANSPOSE, RESIZE)
 }
 
 
-
 TEST (PARALLEL_TRANSPOSE, EMPTY_DATA)
 {
     size_t n_rows = 1;
@@ -82,7 +81,6 @@ TEST (PARALLEL_TRANSPOSE, BUTCH_TRANSPOSE)
     free(copy_matrix);
 }
 
-
 TEST (PARALLEL_TRANSPOSE, FUNCTIONAL)
 {
     size_t n_rows = 3;
@@ -98,8 +96,6 @@ TEST (PARALLEL_TRANSPOSE, FUNCTIONAL)
         EXPECT_DOUBLE_EQ(matrix[i], matrix_2x3_T[i]);
     free(matrix);
 }
-
-
 
 int main(int argc, char** argv)
 {

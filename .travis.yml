@@ -26,6 +26,8 @@ jobs:
       - python3 create_test_data.py
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
       - make -C build
+      - cd build
+      - ./hw2
 
   - stage: TestCoverage
     script:

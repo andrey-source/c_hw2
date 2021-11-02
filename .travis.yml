@@ -13,27 +13,24 @@ before_install:
 - sudo pip install numpy
 
 
+script:
+ - cmake -B build -DCMAKE_BUILD_TYPE=$BUILD
+ - make -C build
+
+
 
 jobs:
-  - stage: "Build"
-    script:
-      - mkdir build
-      - cd build
-      - cmake ..
-      - make
-  - stage: "StressTest"
+  include:
+  - stage: StressTest
     script:
       - python3 create_test_data.py
-      - ls
-      - cd build
-      - ls
-      - ./hw2
-      - rm test_data.txt
-  - stage: "GTest"
+      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
+      - make -C build
+
+  - stage: TestCoverage
     script:
-      - ./test_input
-      - ./test_naive_transpose
-      - ./test_parallel_transpose
-      - curl -Os https://uploader.codecov.io/latest/linux/codecov
-      - chmod +x codecov
-      - ./codecov -f<(gcovr -x)
+     - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
+     - make -C build 
+     - curl -Os https://uploader.codecov.io/latest/linux/codecov
+     - chmod +x codecov
+     - ./codecov -f <(gcovr -e '.*/tests/.*' -x)

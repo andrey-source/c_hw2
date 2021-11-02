@@ -17,6 +17,7 @@ jobs:
     script:
       - python3 create_test_data.py
     name: "StreesTest"
+    script:
       - mkdir build
       - cd build
       - cmake ..

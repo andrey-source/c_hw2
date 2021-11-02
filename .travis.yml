@@ -8,21 +8,21 @@ install:
 - sudo apt-get update
 - sudo apt-get install --yes libgtest-dev
 - sudo apt-get install --yes gcovr
-- sudo apt install python3-pip
+- sudo apt-get install python3-pip
 - sudo pip install numpy
 
 jobs:
   - stage: Build
+  - name: "Create test_data"
     script:
+      - python3 create_test_data.py
+    name: "StreesTest"
       - mkdir build
       - cd build
       - cmake ..
       - make
-    - name: "StressTest"
-    script:
-    - python3 create_test_data.py
-    - valgrind --error-exitcode=1 --leak-check=full -q ./hw2
-    - rm test_data.txt
+    - ./hw2
+    - cd .. rm test_data.txt
     # -name: "Gtest"
     # script:
     # - ./test_input

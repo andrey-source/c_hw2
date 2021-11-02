@@ -41,3 +41,14 @@ jobs:
      - ./test_input
      - ./test_naive_transpose
      - ./test_parallel_transpose
+addons :
+   apt :
+     packages : lcov 
+
+after_success :
+ # Создать отчет lcov 
+- lcov --capture --directory. --output-file cover.info 
+- lcov --remove extension.info '/ usr / *' --output-file extension.info # фильтр системных файлов 
+- lcov --list охват.info # информация об отладке 
+# Выгрузка отчета в CodeCov 
+- bash <(curl -s https://codecov.io/bash) -f охват.info || echo "Codecov не собирал отчеты о покрытии"

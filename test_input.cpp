@@ -11,6 +11,18 @@ extern "C"
 
 
 
+TEST (INPUT_SIZE, INCORRECT_INITIALIZATION)
+{
+    std::ofstream test_file;
+    test_file.open("test.txt");
+    test_file << "2 3";
+    test_file.close();
+    size_t n_rows = 1;
+    size_t n_columns = 4;
+    FILE *stream = fopen("test.txt", "r");
+    ASSERT_EQ(input_size(&n_rows, &n_columns, stream), false);
+    remove("test.txt");
+}
 
 TEST (INPUT_SIZE, INCORRECT_INPUT_NO_NUM)
 {
@@ -24,6 +36,7 @@ TEST (INPUT_SIZE, INCORRECT_INPUT_NO_NUM)
     ASSERT_EQ(input_size(&n_rows, &n_columns, stream), false);
     remove("test.txt");
 }
+
 
 TEST (INPUT_SIZE, INCORRECT_INPUT_NO_UNSIGNED)
 {

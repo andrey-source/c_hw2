@@ -29,10 +29,26 @@ jobs:
       - cd build
       - ./hw2
 
+
   - stage: TestCoverage
     script:
      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
      - make -C build 
+     - cd build
+     - 
      - curl -Os https://uploader.codecov.io/latest/linux/codecov
      - chmod +x codecov
      - ./codecov -f <(gcovr -e '.*/tests/.*' -x)
+
+  - stage: Gtest
+      script:
+     - cd build
+     - ./test_input
+     - ./test_naive_transpose
+     - ./test_parallel_transpose
+
+    after_success:
+     - lcov --directory . --capture --output-file coverage.info
+     - lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
+     - lcov --list coverage.info
+     - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"

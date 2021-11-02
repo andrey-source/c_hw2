@@ -21,7 +21,7 @@ jobs:
       - cd build
       - cmake ..
       - make
-    - ./hw2
+      - valgrind --leak-check=full ./hw2
     # - cd .. 
     # - rm test_data.txt
     # -name: "Gtest"

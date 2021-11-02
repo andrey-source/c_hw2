@@ -1,7 +1,10 @@
 os: linux
 dist: focal
 
-
+addons:
+  apt:
+    packages: lcov
+    
 language: cpp
 
 before_install:
@@ -41,14 +44,13 @@ jobs:
      - ./test_input
      - ./test_naive_transpose
      - ./test_parallel_transpose
-addons :
-   apt :
-     packages : lcov 
 
-after_success :
- # Создать отчет lcov 
-- lcov --capture --directory. --output-file cover.info 
-- lcov --remove extension.info '/ usr / *' --output-file extension.info # фильтр системных файлов 
-- lcov --list охват.info # информация об отладке 
-# Выгрузка отчета в CodeCov 
-- bash <(curl -s https://codecov.io/bash) -f охват.info || echo "Codecov не собирал отчеты о покрытии"
+
+
+after_success:
+# Create lcov report
+- lcov --capture --directory . --output-file coverage.info
+- lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
+- lcov --list coverage.info # debug info
+# Uploading report to CodeCov
+- bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"

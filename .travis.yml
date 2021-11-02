@@ -24,6 +24,7 @@ jobs:
   - stage: "StressTest"
     script:
       - python3 create_test_data.py
+      - ls
       - ./hw2
       - rm test_data.txt
   - stage: "GTest"

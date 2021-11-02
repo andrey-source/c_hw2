@@ -13,12 +13,6 @@ before_install:
 - sudo pip install numpy
 
 
-script:
- - cmake -B build -DCMAKE_BUILD_TYPE=$BUILD
- - make -C build
-
-
-
 jobs:
   include:
   - stage: StressTest
@@ -41,7 +35,9 @@ jobs:
 
   - stage: Gtest
     script:
-      - cd build
-      - ./test_input
-      - ./test_naive_transpose
-      - ./test_parallel_transpose
+     - cmake -B build -DCMAKE_BUILD_TYPE=$BUILD
+     - make -C build
+     - cd build
+     - ./test_input
+     - ./test_naive_transpose
+     - ./test_parallel_transpose

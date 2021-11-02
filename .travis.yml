@@ -23,14 +23,14 @@ jobs:
       - cd build
       - cmake ..
       - make
-      - valgrind --leak-check=full ./hw2
-    # - cd .. 
-    # - rm test_data.txt
-    # -name: "Gtest"
-    # script:
-    # - ./test_input
-    # - ./test_naive_transpose
-    # - ./test_parallel_transpose
-#     - curl -Os https://uploader.codecov.io/latest/linux/codecov
-#     - chmod +x codecov
-#     - ./codecov -f<(gcovr -x)
+      - ./hw2
+      - cd .. 
+      - rm test_data.txt
+    -name: "Gtest"
+    script:
+      - ./test_input
+      - ./test_naive_transpose
+      - ./test_parallel_transpose
+      - curl -Os https://uploader.codecov.io/latest/linux/codecov
+      - chmod +x codecov
+      - ./codecov -f<(gcovr -x)

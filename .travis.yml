@@ -22,7 +22,8 @@ jobs:
       - cmake ..
       - make
     - ./hw2
-    - cd .. rm test_data.txt
+    - cd .. 
+    - rm test_data.txt
     # -name: "Gtest"
     # script:
     # - ./test_input

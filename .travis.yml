@@ -28,6 +28,7 @@ jobs:
       - rm test_data.txt
     -name: "Gtest"
     script:
+      - cd build
       - ./test_input
       - ./test_naive_transpose
       - ./test_parallel_transpose

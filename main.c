@@ -36,17 +36,28 @@ int main()
 
     // print_matrix(matrix, n_rows, n_columns);
 
-    clock_t start = clock();
+    
+    struct timespec start, finish;
+
+    bool flag_start = clock_gettime(CLOCK_REALTIME, &start);
+
+
     bool success = naive_transpose(matrix, &n_rows, &n_columns);
     if (!success)
     {
         free(matrix);
         return EXIT_FAILURE;
     }
-    clock_t finish = clock();
-    double spent_time = (double)(finish - start) / CLOCKS_PER_SEC;
-    printf("NAIVE TRANSPOSE SPENT TIME: %lf\n", spent_time);
 
+    bool flag_finish = clock_gettime(CLOCK_REALTIME, &finish);
+    if (!flag_start && !flag_finish)
+    {
+        size_t spent_time = 1000000000*(finish.tv_sec - start.tv_sec)+(finish.tv_nsec - start.tv_nsec);
+        printf("NAIVE TRANSPOSE SPENT TIME: %lu ns \n", spent_time);
+    }
+    
+
+    
 
     void *library = dlopen("./libparallel_transpose_lib.so", RTLD_LAZY);
     if (!library)
@@ -62,16 +73,21 @@ int main()
         return EXIT_FAILURE;
     }
     
-    start = clock();
+    
+    flag_start = clock_gettime(CLOCK_REALTIME, &start);
+
     bool test = parallel_transpose(matrix, &n_rows, &n_columns);
     if (!test)
     {
         free(matrix);
         return EXIT_FAILURE;
     }
-    finish = clock();
-    spent_time = (double)(finish - start) / CLOCKS_PER_SEC;
-    printf("PARALLEL TRANSPOSE SPENT TIME: %lf\n", spent_time);
+    flag_finish = clock_gettime(CLOCK_REALTIME, &finish);
+    if (!flag_start && !flag_finish)
+    {
+        size_t spent_time = 1000000000*(finish.tv_sec - start.tv_sec)+(finish.tv_nsec - start.tv_nsec);
+        printf("NAIVE TRANSPOSE SPENT TIME: %lu ns \n", spent_time);
+    }
 
     // print_matrix(matrix, n_rows, n_columns);
     free(matrix);

@@ -8,12 +8,15 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
+add_compile_options(-Wall -Wextra -pedantic)
 
 add_compile_options(--coverage)
 add_link_options(--coverage)
 
+
 add_compile_options(-fsanitize=address)
 add_link_options(-fsanitize=address)
+
 
 
 set(INPUT input.c)

@@ -3,9 +3,6 @@
 #include "input.h"
 
 
-
-
-
 bool input_size(size_t * n_rows, size_t * n_columns, FILE * stream)
 {
 

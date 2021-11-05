@@ -6,10 +6,6 @@
 bool input_size(size_t * n_rows, size_t * n_columns, FILE * stream)
 {
 
-    if (*n_rows || *n_columns)
-    {
-        return false;
-    }
   
     if(stream == stdin)
         printf("Enter the number of rows\n");
@@ -27,8 +23,10 @@ bool input_size(size_t * n_rows, size_t * n_columns, FILE * stream)
 
 bool fill_matrix(double *matrix, const size_t n_rows, const size_t n_columns, FILE *stream)
 {
-    if (!n_rows || !n_columns)
+    if (n_rows * n_columns < 1 || n_rows > MAX_SIZE || n_columns > MAX_SIZE)
         return false;
+
+
     for (size_t i = 0; i < n_rows; i++)
     {
         for (size_t j = 0; j < n_columns; j++)
@@ -47,10 +45,7 @@ bool fill_matrix(double *matrix, const size_t n_rows, const size_t n_columns, FI
 
 bool input(double **matrix, size_t *n_rows, size_t *n_columns, FILE *stream)   
 {   
-    if (!matrix)
-        return false;
-    
-    if (!input_size(n_rows, n_columns, stream))
+    if (!matrix || !input_size(n_rows, n_columns, stream))
         return false;
     
     double * new_matrix = (double*)malloc(*n_rows * *n_columns * sizeof(double));

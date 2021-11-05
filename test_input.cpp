@@ -11,23 +11,6 @@ extern "C"
 
 
 
-TEST (INPUT_SIZE, INCORRECT_INITIALIZATION)
-{
-    std::ofstream test_file;
-    test_file.open("test.txt");
-    test_file << "2 3";
-    test_file.close();
-    size_t n_rows = 1;
-    size_t n_columns = 4;
-    FILE *stream = fopen("test.txt", "r");
-    ASSERT_EQ(input_size(&n_rows, &n_columns, stream), false);
-    remove("test.txt");
-}
-
-
-
-
-
 TEST (INPUT_SIZE, INCORRECT_INPUT_NO_NUM)
 {
     std::ofstream test_file;
@@ -103,6 +86,7 @@ TEST (FILL_MATRIX, INCORRECT_DATA)
 }
 
 
+
 TEST (FILL_MATRIX, INCORRECT_TYPE_DATA)
 {
     std::ofstream test_file;
@@ -120,6 +104,7 @@ TEST (FILL_MATRIX, INCORRECT_TYPE_DATA)
 
 
 
+
 TEST (FILL_MATRIX, INCORRECT_SIZE_DATA)
 {
     size_t n_rows = 3;
@@ -134,9 +119,15 @@ TEST (FILL_MATRIX, INCORRECT_SIZE_DATA)
     double* matrix = (double*)malloc(n_rows * n_columns * sizeof(double));
     FILE *stream = fopen("test.txt", "r");
     EXPECT_EQ(fill_matrix(matrix, n_rows, n_columns, stream), false);
+    test_file.open("test.txt");
+    test_file << 5 * 1.1 << std::endl;
+    test_file.close();
+    EXPECT_EQ(fill_matrix(matrix, 0, n_columns, stream), false);
     free(matrix);
     remove("test.txt");
 }
+
+
 
 
 TEST (FILL_MATRIX, CHECK_VALUES)
@@ -157,6 +148,15 @@ TEST (FILL_MATRIX, CHECK_VALUES)
     remove("test.txt");
 }
 
+TEST (INPUT, NULL_MATRIX)
+{
+    size_t n_rows = 3;
+    size_t n_columns = 2;
+    std::ofstream test_file;
+    test_file.open("test.txt");
+    FILE *stream = fopen("test.txt", "r"); 
+    EXPECT_EQ(input(nullptr, &n_rows, &n_columns, stream), false);
+}
 
 
 

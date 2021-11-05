@@ -69,6 +69,34 @@ TEST (PARALLEL_TRANSPOSE, EMPTY_DATA)
 }
 
 
+TEST (PARALLEL_TRANSPOSE, FILL_ARGS_CORRECT)
+{
+    size_t n_rows = 3;
+    size_t n_columns = 2;
+    size_t size = n_rows * n_columns;
+    args args_struct;
+    EXPECT_EQ(fill_args(&args_struct, matrix_3x2, matrix_2x3_T, 2, 4, n_rows, n_columns), true);
+    EXPECT_EQ(args_struct.left, 2);
+    EXPECT_EQ(args_struct.right, 4);
+    EXPECT_EQ(args_struct.n_rows, n_rows);
+    EXPECT_EQ(args_struct.n_columns, n_columns);
+    for (size_t i = 0; i < size; i++)
+    {
+        EXPECT_EQ(args_struct.copy_matrix[i], matrix_2x3_T[i]);
+        EXPECT_EQ(args_struct.matrix[i], matrix_3x2[i]);
+    }
+
+}
+
+TEST (PARALLEL_TRANSPOSE, FILL_ARGS_INCORRECT)
+{
+    size_t n_rows = 3;
+    size_t n_columns = 2;
+    args args_struct;
+    EXPECT_EQ(fill_args(&args_struct, nullptr, matrix_2x3_T, 2, 4, n_rows, n_columns), false);
+
+}
+
 // transpose only second row
 TEST (PARALLEL_TRANSPOSE, BUTCH_TRANSPOSE)
 {
@@ -77,12 +105,12 @@ TEST (PARALLEL_TRANSPOSE, BUTCH_TRANSPOSE)
     size_t size = n_rows * n_columns;
     double *matrix = (double*)malloc(size * sizeof(double));
     double *copy_matrix = (double*)malloc(size * sizeof(double));
-    for (size_t i = 0; i < size; i++)
-    {
-        matrix[i] = matrix_3x2[i];
-        copy_matrix[i] = matrix_3x2[i];
-    }
-    args args_butch = fill_args(matrix, copy_matrix, 2, 4, n_rows, n_columns);
+    memcpy(matrix, matrix_3x2, size * sizeof(double));
+    memcpy(copy_matrix, matrix_3x2, size * sizeof(double));
+
+
+    args args_butch;
+    ASSERT_EQ(fill_args(&args_butch, matrix, copy_matrix, 2, 4, n_rows, n_columns), true);
     butch_transpose((void*)&args_butch);
     EXPECT_DOUBLE_EQ(matrix[1], matrix_2x3_T[1]);
     EXPECT_DOUBLE_EQ(matrix[4], matrix_2x3_T[4]);

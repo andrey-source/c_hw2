@@ -20,6 +20,20 @@ double matrix_2x3_T[6] = {1.1, 3.3, 5.5,
                           2.2, 4.4, 6.6};
 
 
+
+TEST (PARALLEL_TRANSPOSE, NULL_SIZE)
+{
+    size_t n_rows = 1;
+    size_t n_columns = 1;
+    size_t size = n_rows * n_columns;
+    double *matrix = (double*)malloc(size *sizeof(double));
+    for (size_t i = 0; i < size; i++)
+        matrix[i] = i * 1.1;
+    EXPECT_EQ(parallel_transpose(matrix, nullptr, &n_columns), false);
+    free(matrix);
+}
+
+
 TEST (PARALLEL_TRANSPOSE, INCORRECT_SIZE)
 {
     size_t n_rows = 1;

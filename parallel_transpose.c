@@ -51,11 +51,12 @@ void * butch_transpose(void* ptr)
 bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
 {
 
-    size_t size = *n_rows * *n_columns;
-    if (size <= 1 || !matrix)
-    {
+    if (!n_rows || !n_columns || !matrix)
         return false;
-    }
+
+    size_t size = *n_rows * *n_columns;
+    if (size <= 1)
+        return false;
         
 
     double *copy_matrix = (double*)malloc(size * sizeof(double));

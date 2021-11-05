@@ -4,9 +4,13 @@
 
 bool naive_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
 {
+   
+    if (!n_rows || !n_columns || !matrix)
+        return false;
+
     size_t size = *n_rows * *n_columns;
-    if (size <= 1 || !matrix)
-            return false;
+    if (size <= 1)
+        return false;
 
     double *copy_matrix = (double*)malloc(size * sizeof(double));
     memcpy(copy_matrix, matrix, size * sizeof(double));

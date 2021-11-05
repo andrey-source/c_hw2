@@ -12,6 +12,19 @@ extern "C"
 }
 
 
+TEST (NAIVE_TRANSPOSE, NULL_SIZE)
+{
+    size_t n_rows = 1;
+    size_t n_columns = 1;
+    size_t size = n_rows * n_columns;
+    double *matrix = (double*)malloc(size *sizeof(double));
+    for (size_t i = 0; i < size; i++)
+        matrix[i] = i * 1.1;
+    EXPECT_EQ(naive_transpose(matrix, nullptr, &n_columns), false);
+    free(matrix);
+}
+
+
 TEST (NAIVE_TRANSPOSE, INCORRECT_SIZE)
 {
     size_t n_rows = 1;

@@ -1,9 +1,9 @@
-#include "parallel_transpose.h"
-#include <unistd.h>
-#include <pthread.h>
-#include <string.h>
-
 #include <stdio.h>
+#include <string.h>
+#include <pthread.h>
+#include <unistd.h>
+#include "parallel_transpose.h"
+
 
 
 typedef struct args
@@ -15,6 +15,8 @@ typedef struct args
     size_t n_columns;
     size_t n_rows;
 }args;
+
+
 
 args fill_args(double * matrix, double *copy_matrix, size_t left, size_t right, size_t n_rows, size_t n_columns)
 {
@@ -46,8 +48,6 @@ void * butch_transpose(void* ptr)
 
 
 
-
-
 bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
 {
 
@@ -58,8 +58,10 @@ bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
     if (size <= 1)
         return false;
         
-
     double *copy_matrix = (double*)malloc(size * sizeof(double));
+    if (!copy_matrix)
+        return false;
+
     memcpy(copy_matrix, matrix, size * sizeof(double));
     if (!copy_matrix)
         return false;
@@ -78,8 +80,6 @@ bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
                                  *n_rows, 
                                  *n_columns);
     }
-
-
     args_butch[num_pth - 1] = fill_args(matrix,
                                         copy_matrix,
                                         size_butch * (num_pth - 1),
@@ -87,7 +87,6 @@ bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
                                         *n_rows,
                                         *n_columns);
 
-   
     for (size_t i = 0; i < num_pth - 1; i ++)
     {
         

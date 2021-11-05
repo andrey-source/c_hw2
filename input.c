@@ -1,6 +1,7 @@
 
-#include "input.h"
 #include <stdlib.h>
+#include "input.h"
+
 
 
 
@@ -36,10 +37,9 @@ bool fill_matrix(double *matrix, const size_t n_rows, const size_t n_columns, FI
         for (size_t j = 0; j < n_columns; j++)
         {
             double input_num;
-            if (fscanf(stream, "%lf", &input_num) == 1)
-                matrix[n_columns * i + j] = input_num;
-            else
-                return false; 
+            if (fscanf(stream, "%lf", &input_num) != 1)
+                return false;
+            matrix[n_columns * i + j] = input_num;
         }
             
     }

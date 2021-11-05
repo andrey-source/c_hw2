@@ -1,5 +1,6 @@
-#include "naive_transpose.h"
 #include <string.h>
+#include "naive_transpose.h"
+
 
 
 bool naive_transpose(double * matrix, size_t *n_rows, size_t *n_columns)

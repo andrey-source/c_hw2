@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.13)
 project(hw2 C)
 project(tests CXX)
 
@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
-add_compile_options(-Wall -Wextra -pedantic)
+
 
 # add_compile_options(--coverage)
 # add_link_options(--coverage)
@@ -34,13 +34,6 @@ if(WITH_SANITIZERS)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)
 endif()
-
-
-
-
-
-
-
 
 
 set(INPUT input.c)

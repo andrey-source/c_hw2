@@ -61,21 +61,24 @@ int main()
     }
     
 
-    
-    void *library = dlopen("./libparallel_transpose_lib.so", RTLD_LAZY);
-    if (!library)
-    {
-        free(matrix);
-        return EXIT_FAILURE;
-    } 
+
+
+
+
+    // void *library = dlopen("./libparallel_transpose_lib.so", RTLD_LAZY);
+    // if (!library)
+    // {
+    //     free(matrix);
+    //     return EXIT_FAILURE;
+    // } 
 
     
-    bool(*parallel_transpose)(double *mat, size_t * rows, size_t* columns) = dlsym(library, "parallel_transpose");
-    if (!parallel_transpose) 
-    {
-        free(matrix);
-        return EXIT_FAILURE;
-    }
+    // bool(*parallel_transpose)(double *mat, size_t * rows, size_t* columns) = dlsym(library, "parallel_transpose");
+    // if (!parallel_transpose) 
+    // {
+    //     free(matrix);
+    //     return EXIT_FAILURE;
+    // }
     
     
     flag_start = clock_gettime(CLOCK_REALTIME, &start);

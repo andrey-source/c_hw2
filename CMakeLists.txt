@@ -34,11 +34,11 @@ set(NAIVE_TRANSPOSE naive_transpose.c)
 add_library(naive_transpose_lib STATIC ${NAIVE_TRANSPOSE})
 
 set(PARALLEL_TRANSPOSE parallel_transpose.c)
-add_library(parallel_transpose_lib MODULE ${PARALLEL_TRANSPOSE})
+add_library(parallel_transpose_lib SHARED ${PARALLEL_TRANSPOSE})
 
 find_package(Threads REQUIRED)
 add_executable(hw2 main.c)
-target_link_libraries(hw2 input_lib naive_transpose_lib dl)
+target_link_libraries(hw2 input_lib naive_transpose_lib parallel_transpose_lib)
 
 
 find_package(GTest REQUIRED)

@@ -35,7 +35,7 @@ int main()
 
 
 
-    input(&matrix, &n_rows, &n_columns, f);
+    input(&matrix, &n_rows, &n_columns, stdin);
 
     // print_matrix(matrix, n_rows, n_columns);
 

@@ -18,22 +18,28 @@ before_install:
 
 jobs:
   include:
+  - stage: Testing
+    name: Cppcheck
+    script: cppcheck -j4 --inconclusive --error-exitcode=1 --language=c *.c *.h
+
   - stage: TestCoverage
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
       - make -C build
+
+
   - stage: Sanitaize
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
       - make -C build
-  - stage: StressTest
+
+  - stage: Valgrind
     script:
       - python3 create_test_data.py
       - cmake -B build
       - make -C build
       - cd build
-      - ./hw2
-  
+      - valgrind --error-exitcode=1 --leak-check=full -q ./hw2 <../test_data.txt
 
   - stage: Gtest
     script:

@@ -15,12 +15,15 @@ add_link_options(-pthread)
 
 
 option(WITH_COVERAGE "Add coverage estimation")
+option(WITH_SANITIZERS "Add address sanitizer")
+option(parallel "Parallel calculate")
+
 if(WITH_COVERAGE)
     add_compile_options(--coverage)
     add_link_options(--coverage)
 endif()
 
-option(WITH_SANITIZERS "Add address sanitizer")
+
 if(WITH_SANITIZERS)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)
@@ -38,20 +41,29 @@ add_library(parallel_transpose_lib SHARED ${PARALLEL_TRANSPOSE})
 
 find_package(Threads REQUIRED)
 add_executable(hw2 main.c)
-target_link_libraries(hw2 input_lib naive_transpose_lib parallel_transpose_lib)
+
+
+
+if(parallel)
+    target_link_libraries(hw2 input_lib parallel_transpose_lib)
+else()
+    target_link_libraries(hw2 input_lib naive_transpose_lib)
+endif()
+
+
 
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 
-add_executable(test_input test_input.cpp)
-target_link_libraries(test_input input_lib ${GTEST_LIBRARIES} pthread)
+# add_executable(test_input test_input.cpp)
+# target_link_libraries(test_input input_lib ${GTEST_LIBRARIES} pthread)
 
 
-add_executable(test_naive_transpose test_naive_transpose.cpp)
-target_link_libraries(test_naive_transpose naive_transpose_lib ${GTEST_LIBRARIES} pthread)
+# add_executable(test_naive_transpose test_naive_transpose.cpp)
+# target_link_libraries(test_naive_transpose naive_transpose_lib ${GTEST_LIBRARIES} pthread)
 
 
-add_executable(test_parallel_transpose test_parallel_transpose.cpp)
-target_link_libraries(test_parallel_transpose dl ${GTEST_LIBRARIES} pthread)
+# add_executable(test_parallel_transpose test_parallel_transpose.cpp)
+# target_link_libraries(test_parallel_transpose dl ${GTEST_LIBRARIES} pthread)

@@ -1,8 +1,7 @@
-#include <stdio.h>
 #include <string.h>
 #include <pthread.h>
 #include <unistd.h>
-#include "parallel_transpose.h"
+#include "transpose.h"
 
 
 
@@ -51,7 +50,7 @@ void * butch_transpose(void* ptr)
 
 
 
-bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
+bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
 {
 
     if (!n_rows || !n_columns || !matrix)
@@ -120,6 +119,7 @@ bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
             }
     }
 
+    printf("parallel");
     free(copy_matrix);
     free(pth);
     free(args_butch);

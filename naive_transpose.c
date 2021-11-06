@@ -1,9 +1,9 @@
 #include <string.h>
-#include "naive_transpose.h"
+#include "transpose.h"
 
 
 
-bool naive_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
+bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
 {
    
     if (!n_rows || !n_columns || !matrix)
@@ -24,7 +24,6 @@ bool naive_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
         for (size_t j = 0; j < *n_columns; j++)
            matrix[j * *n_rows + i] = copy_matrix[i * *n_columns + j]; 
     }
-        
     free(copy_matrix);
     size_t temp = *n_rows;
     *n_rows = *n_columns;

@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "input.h"
-#include "naive_transpose.h"
-#include "parallel_transpose.h"
 #include <dlfcn.h>
 #include <time.h>
+#include "input.h"
+#include "transpose.h"
 
 
 
@@ -44,8 +43,7 @@ int main()
 
     bool flag_start = clock_gettime(CLOCK_REALTIME, &start);
 
-
-    bool success = naive_transpose(matrix, &n_rows, &n_columns);
+    bool success = transpose(matrix, &n_rows, &n_columns);
     if (!success)
     {
         free(matrix);
@@ -57,46 +55,9 @@ int main()
     if (!flag_start && !flag_finish)
     {
         size_t spent_time = 1000000000*(finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
-        printf("NAIVE TRANSPOSE SPENT TIME: %lu ns \n", spent_time);
+        printf("SPENT TIME: %lu ns \n", spent_time);
     }
     
-
-
-
-
-
-    // void *library = dlopen("./libparallel_transpose_lib.so", RTLD_LAZY);
-    // if (!library)
-    // {
-    //     free(matrix);
-    //     return EXIT_FAILURE;
-    // } 
-
-    
-    // bool(*parallel_transpose)(double *mat, size_t * rows, size_t* columns) = dlsym(library, "parallel_transpose");
-    // if (!parallel_transpose) 
-    // {
-    //     free(matrix);
-    //     return EXIT_FAILURE;
-    // }
-    
-    
-    flag_start = clock_gettime(CLOCK_REALTIME, &start);
-
-    bool test = parallel_transpose(matrix, &n_rows, &n_columns);
-    if (!test)
-    {
-        free(matrix);
-        return EXIT_FAILURE;
-    }
-    flag_finish = clock_gettime(CLOCK_REALTIME, &finish);
-    if (!flag_start && !flag_finish)
-    {
-        size_t spent_time = 1000000000 * (finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
-        printf("PARALLEL TRANSPOSE SPENT TIME: %lu ns \n", spent_time);
-    }
-
-    // print_matrix(matrix, n_rows, n_columns);
     free(matrix);
     return EXIT_SUCCESS;
 }

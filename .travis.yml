@@ -18,17 +18,25 @@ before_install:
 
 jobs:
   include:
+  - stage: TestCoverage
+    script:
+      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
+      - make -C
+  - stage: Sanitaize
+    script:
+      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
+      - make -C build
   - stage: StressTest
     script:
       - python3 create_test_data.py
-      - cmake -B build -DCMAKE_BUILD_TYPE=Debug 
+      - cmake -B build
       - make -C build
       - cd build
       - ./hw2
 
   - stage: Gtest
     script:
-     - cmake -B build -DCMAKE_BUILD_TYPE=$BUILD
+     - cmake -B build 
      - make -C build
      - cd build
      - ./test_input

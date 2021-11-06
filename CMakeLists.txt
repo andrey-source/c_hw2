@@ -10,16 +10,36 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 add_compile_options(-Wall -Wextra -pedantic)
 
-add_compile_options(--coverage)
-add_link_options(--coverage)
+# add_compile_options(--coverage)
+# add_link_options(--coverage)
 
 add_compile_options(-pthread) 
 add_link_options(-pthread)
 
 
 
+
 # add_compile_options(-fsanitize=address)
 # add_link_options(-fsanitize=address)
+
+
+option(WITH_COVERAGE "Add coverage estimation")
+if(WITH_COVERAGE)
+    add_compile_options(--coverage)
+    add_link_options(--coverage)
+endif()
+
+option(WITH_SANITIZERS "Add address sanitizer")
+if(WITH_SANITIZERS)
+    add_compile_options(-fsanitize=address)
+    add_link_options(-fsanitize=address)
+endif()
+
+
+
+
+
+
 
 
 

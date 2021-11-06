@@ -9,6 +9,7 @@ language: cpp
 
 before_install:
 - sudo apt-get update
+- sudo apt_get install cppcheck
 - sudo apt-get install --yes libgtest-dev
 - sudo apt-get install --yes gcovr
 - sudo apt-get install valgrind

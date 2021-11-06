@@ -24,10 +24,10 @@
 
 int main()
 {
-    FILE *f;
-    f = fopen("../test_data.txt", "r");
-    if (!f)
-        return EXIT_FAILURE;
+    // FILE *f;
+    // f = fopen("../test_data.txt", "r");
+    // if (!f)
+    //     return EXIT_FAILURE;
 
     double *matrix = NULL;
     size_t n_rows = 0;

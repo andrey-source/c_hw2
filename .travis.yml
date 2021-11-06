@@ -25,7 +25,7 @@ jobs:
   - stage: Sanitaize
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
-      - make -C build all test
+      - make -C build
   - stage: StressTest
     script:
       - python3 create_test_data.py
@@ -33,6 +33,7 @@ jobs:
       - make -C build
       - cd build
       - ./hw2
+  
 
   - stage: Gtest
     script:

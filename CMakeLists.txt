@@ -13,9 +13,13 @@ add_compile_options(-Wall -Wextra -pedantic)
 add_compile_options(--coverage)
 add_link_options(--coverage)
 
+add_compile_options(-pthread) 
+add_link_options(-pthread)
 
-add_compile_options(-fsanitize=address)
-add_link_options(-fsanitize=address)
+
+
+# add_compile_options(-fsanitize=address)
+# add_link_options(-fsanitize=address)
 
 
 

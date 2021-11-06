@@ -11,21 +11,21 @@
 
 
 
-void print_matrix(const double *matrix, const size_t n_rows, const size_t n_columns)
-{
-    for (size_t i = 0; i < n_rows; i++)
-    {   
-        for (size_t j = 0; j < n_columns; j++)
-            printf("%0.1lf\t", matrix[i * n_columns + j]);
-        printf("\n");
-    }
-    printf("\n");
-}
+// void print_matrix(const double *matrix, const size_t n_rows, const size_t n_columns)
+// {
+//     for (size_t i = 0; i < n_rows; i++)
+//     {   
+//         for (size_t j = 0; j < n_columns; j++)
+//             printf("%0.1lf\t", matrix[i * n_columns + j]);
+//         printf("\n");
+//     }
+//     printf("\n");
+// }
 
 int main()
 {
     FILE *f;
-    f = fopen("../test_10x5.txt", "r");
+    f = fopen("../test_data.txt", "r");
     if (!f)
         return EXIT_FAILURE;
 
@@ -37,7 +37,7 @@ int main()
 
     input(&matrix, &n_rows, &n_columns, f);
 
-    print_matrix(matrix, n_rows, n_columns);
+    // print_matrix(matrix, n_rows, n_columns);
 
     
     struct timespec start, finish;
@@ -52,7 +52,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    print_matrix(matrix, n_rows, n_columns);
+    // print_matrix(matrix, n_rows, n_columns);
     bool flag_finish = clock_gettime(CLOCK_REALTIME, &finish);
     if (!flag_start && !flag_finish)
     {
@@ -89,11 +89,11 @@ int main()
     flag_finish = clock_gettime(CLOCK_REALTIME, &finish);
     if (!flag_start && !flag_finish)
     {
-        size_t spent_time = 1000000000*(finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
-        printf("NAIVE TRANSPOSE SPENT TIME: %lu ns \n", spent_time);
+        size_t spent_time = 1000000000 * (finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
+        printf("PARALLEL TRANSPOSE SPENT TIME: %lu ns \n", spent_time);
     }
 
-    print_matrix(matrix, n_rows, n_columns);
+    // print_matrix(matrix, n_rows, n_columns);
     free(matrix);
     return EXIT_SUCCESS;
 }

@@ -66,8 +66,6 @@ bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
         return false;
 
     memcpy(copy_matrix, matrix, size * sizeof(double));
-    if (!copy_matrix)
-        return false;
 
     size_t num_proc = sysconf(_SC_NPROCESSORS_ONLN);
     size_t num_pth = num_proc < size ? num_proc : size;
@@ -89,8 +87,12 @@ bool parallel_transpose(double * matrix, size_t *n_rows, size_t *n_columns)
     bool fill_flag = fill_args(&args_butch[num_pth - 1], matrix, copy_matrix, 
                                 size_butch * (num_pth - 1),  size, *n_rows, *n_columns);
     if (!fill_flag)
+    {
+        free(pth);
+        free(copy_matrix);
+        free(args_butch);
         return false;
-
+    }
     for (size_t i = 0; i < num_pth - 1; i ++)
     { 
         int flag_error = pthread_create(&pth[i], NULL, butch_transpose, (void*)&args_butch[i]);

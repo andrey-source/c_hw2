@@ -40,7 +40,7 @@ jobs:
       - cmake -B build
       - make -C build
       - cd build
-      - valgrind --error-exitcode=1 --leak-check=full -q ./hw2 <../test_data.txt
+      - valgrind --leak-check=full -q ./hw2 <../test_data.txt
 
   - stage: Gtest
     script:

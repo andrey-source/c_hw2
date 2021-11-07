@@ -67,6 +67,11 @@ bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
     pthread_t* pth = (pthread_t*)malloc((num_pth- 1) * sizeof(pthread_t));
     size_t size_butch = size / num_pth;
     args* args_butch = (args*)malloc(num_pth * sizeof(args));
+    if (!args_butch)
+        {
+            free(pth);
+            free(copy_matrix);
+        }
     for (size_t i =  0; i < num_pth - 1; i ++)
     {
         bool fill_flag = fill_args(&args_butch[i], matrix, copy_matrix, size_butch * i,

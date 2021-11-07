@@ -32,7 +32,9 @@ jobs:
   - stage: Testing
     name: Cppcheck
     script: 
-      - cppcheck -j4 --inconclusive --error-exitcode=1 --language=c *.c *.h
+      - cppcheck src
+      - cppcheck include
+      - cppcheck tests
   - stage: TestCoverage
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1

@@ -67,3 +67,8 @@ target_link_libraries(test_naive_transpose naive_transpose_lib ${GTEST_LIBRARIES
 
 add_executable(test_parallel_transpose test_parallel_transpose.cpp)
 target_link_libraries(test_parallel_transpose dl ${GTEST_LIBRARIES} pthread)
+
+enable_testing()
+add_test(test_input test_input)
+add_test(test_naive_transpose test_naive_transpose)
+add_test(test_parallel_transpose test_parallel_transpose)

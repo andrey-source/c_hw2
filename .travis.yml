@@ -51,11 +51,7 @@ jobs:
   - stage: Gtest
     script:
      - cmake -B build 
-     - make -C build
-     - cd build
-     - ./test_input
-     - ./test_naive_transpose
-     - ./test_parallel_transpose
+     - make -C build all test
 
 after_success:
 # Create lcov report

@@ -30,17 +30,18 @@ if(WITH_SANITIZERS)
 endif()
 
 
-set(INPUT input.c)
-add_library(input_lib STATIC ${INPUT})
 
-set(NAIVE_TRANSPOSE naive_transpose.c)
-add_library(naive_transpose_lib STATIC ${NAIVE_TRANSPOSE})
+add_library(input_lib STATIC src/input.c)
+target_include_directories(input_lib PUBLIC include)
 
-set(PARALLEL_TRANSPOSE parallel_transpose.c)
-add_library(parallel_transpose_lib SHARED ${PARALLEL_TRANSPOSE})
+add_library(naive_transpose_lib STATIC src/naive_transpose.c)
+target_include_directories(naive_transpose_lib PUBLIC include)
+
+add_library(parallel_transpose_lib SHARED src/parallel_transpose.c)
+target_include_directories(parallel_transpose_lib PUBLIC include)
 
 find_package(Threads REQUIRED)
-add_executable(hw2 main.c)
+add_executable(hw2 src/main.c)
 
 
 
@@ -57,16 +58,16 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 
-add_executable(test_input test_input.cpp)
+add_executable(test_input tests/test_input.cpp)
 target_link_libraries(test_input input_lib ${GTEST_LIBRARIES} pthread)
 
 
-add_executable(test_naive_transpose test_naive_transpose.cpp)
+add_executable(test_naive_transpose tests/test_transpose.cpp)
 target_link_libraries(test_naive_transpose naive_transpose_lib ${GTEST_LIBRARIES} pthread)
 
 
-add_executable(test_parallel_transpose test_parallel_transpose.cpp)
-target_link_libraries(test_parallel_transpose dl ${GTEST_LIBRARIES} pthread)
+add_executable(test_parallel_transpose tests/test_transpose.cpp)
+target_link_libraries(test_parallel_transpose parallel_transpose_lib ${GTEST_LIBRARIES} pthread)
 
 enable_testing()
 add_test(test_input test_input)

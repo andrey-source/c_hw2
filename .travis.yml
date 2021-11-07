@@ -20,20 +20,16 @@ before_install:
 jobs:
   include:
   - stage: StressTest
-    name: Naive_transpose
     script:
       - python3 create_test_data.py
       - cmake -B build -Dparallel=0
       - make -C build
       - cd build
       - ./hw2 <../test_data.txt
-    name: Parallel_transpose
-    script:
       - cmake -B build -Dparallel=1
       - make -C build
       - cd build
       - ./hw2 <../test_data.txt
-
   - stage: Testing
     name: Cppcheck
     script: 

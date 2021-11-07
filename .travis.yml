@@ -26,26 +26,21 @@ jobs:
       - make -C build
       - cd build
       - ./hw2 <../test_data.txt
-      - cmake -B build -Dparallel=1
-      - make -C build
-      - cd build
+      - cmake -Dparallel=1 ..
+      - make
       - ./hw2 <../test_data.txt
   - stage: Testing
     name: Cppcheck
     script: 
       - cppcheck -j4 --inconclusive --error-exitcode=1 --language=c *.c *.h
-
   - stage: TestCoverage
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
       - make -C build
-
-
   - stage: Sanitaize
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
       - make -C build
-
   - stage: Valgrind
     script:
       - python3 create_test_data.py
@@ -53,7 +48,6 @@ jobs:
       - make -C build
       - cd build
       - valgrind --leak-check=full -q ./hw2 <../test_data.txt
-
   - stage: Gtest
     script:
      - cmake -B build 
@@ -62,8 +56,6 @@ jobs:
      - ./test_input
      - ./test_naive_transpose
      - ./test_parallel_transpose
-
-
 
 after_success:
 # Create lcov report

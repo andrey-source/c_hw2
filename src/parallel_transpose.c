@@ -5,7 +5,6 @@
 
 
 
-
 typedef struct args
 {
     double * matrix;
@@ -65,7 +64,6 @@ bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
         return false;
 
     memcpy(copy_matrix, matrix, size * sizeof(double));
-
     size_t num_proc = sysconf(_SC_NPROCESSORS_ONLN);
     size_t num_pth = num_proc < size ? num_proc : size;
     pthread_t* pth = (pthread_t*)malloc((num_pth- 1) * sizeof(pthread_t));
@@ -103,10 +101,8 @@ bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
             return false;
         }
     }
-
     void * ptr = (void*)&args_butch[num_pth - 1];
     butch_transpose(ptr);
-
     for (size_t i = 0; i < num_pth - 1; i++)
     {
         int status = pthread_join(pth[i], NULL);

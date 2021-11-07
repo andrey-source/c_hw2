@@ -1,9 +1,7 @@
-#include "gtest/gtest.h"
 #include <stdio.h>
 #include <fstream>
 #include <string.h>
-
-
+#include "gtest/gtest.h"
 
 
 extern "C"
@@ -34,6 +32,7 @@ TEST (TRANSPOSE, NULL_SIZE)
 }
 
 
+
 TEST (TRANSPOSE, INCORRECT_SIZE)
 {
     size_t n_rows = 1;
@@ -45,6 +44,8 @@ TEST (TRANSPOSE, INCORRECT_SIZE)
     EXPECT_EQ(transpose(matrix, &n_rows, &n_columns), false);
     free(matrix);
 }
+
+
 
 TEST (TRANSPOSE, RESIZE)
 {
@@ -70,7 +71,6 @@ TEST (TRANSPOSE, EMPTY_DATA)
 
 
 
-
 TEST (TRANSPOSE, FUNCTIONAL)
 {
     size_t n_rows = 3;
@@ -86,6 +86,8 @@ TEST (TRANSPOSE, FUNCTIONAL)
         EXPECT_DOUBLE_EQ(matrix[i], matrix_2x3_T[i]);
     free(matrix);
 }
+
+
 
 int main(int argc, char** argv)
 {

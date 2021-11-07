@@ -18,7 +18,6 @@ bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
         return false;
 
     memcpy(copy_matrix, matrix, size * sizeof(double));
-
     for (size_t i = 0; i < *n_rows; i++)
     {
         for (size_t j = 0; j < *n_columns; j++)

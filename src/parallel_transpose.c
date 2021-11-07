@@ -65,12 +65,18 @@ bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
     size_t num_proc = sysconf(_SC_NPROCESSORS_ONLN);
     size_t num_pth = num_proc < size ? num_proc : size;
     pthread_t* pth = (pthread_t*)malloc((num_pth- 1) * sizeof(pthread_t));
+    if (!pth)
+    {
+        free(copy_matrix);
+        return false;
+    }
     size_t size_butch = size / num_pth;
     args* args_butch = (args*)malloc(num_pth * sizeof(args));
     if (!args_butch)
         {
             free(pth);
             free(copy_matrix);
+            return false;
         }
     for (size_t i =  0; i < num_pth - 1; i ++)
     {

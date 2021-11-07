@@ -33,7 +33,6 @@ jobs:
     name: Cppcheck
     script: 
       - cppcheck src
-      - cppcheck include
       - cppcheck tests
   - stage: TestCoverage
     script:

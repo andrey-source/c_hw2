@@ -28,6 +28,7 @@ jobs:
       - cd build
       - ./hw2 <../test_data.txt
     name: Parallel_transpose
+    script:
       - cmake -B build -Dparallel=1
       - make -C build
       - cd build

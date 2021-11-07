@@ -29,7 +29,6 @@ bool fill_args(args * struct_args, double * matrix, double *copy_matrix, size_t 
     struct_args->n_columns = n_columns;
     struct_args->n_rows = n_rows;
     return true;
-
 }
 
 
@@ -42,7 +41,6 @@ void * butch_transpose(void* ptr)
         size_t i = idx / butch->n_columns;
         size_t j = idx % butch->n_columns;
         butch->matrix[j * butch->n_rows + i] = butch->copy_matrix[idx];
-
     }
     return NULL;
 }

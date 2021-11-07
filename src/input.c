@@ -5,8 +5,6 @@
 
 bool input_size(size_t * n_rows, size_t * n_columns, FILE * stream)
 {
-
-  
     if(stream == stdin)
         printf("Enter the number of rows\n");
     if (!fscanf(stream, "%lu", n_rows) || *n_rows > MAX_SIZE)
@@ -25,8 +23,6 @@ bool fill_matrix(double *matrix, const size_t n_rows, const size_t n_columns, FI
 {
     if (n_rows * n_columns < 1 || n_rows > MAX_SIZE || n_columns > MAX_SIZE)
         return false;
-
-
     for (size_t i = 0; i < n_rows; i++)
     {
         for (size_t j = 0; j < n_columns; j++)
@@ -35,8 +31,7 @@ bool fill_matrix(double *matrix, const size_t n_rows, const size_t n_columns, FI
             if (fscanf(stream, "%lf", &input_num) != 1)
                 return false;
             matrix[n_columns * i + j] = input_num;
-        }
-            
+        }       
     }
     return true;
 }

@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 
 
+
 extern "C"
 {
     #include "transpose.h"
@@ -31,8 +32,6 @@ TEST (TRANSPOSE, NULL_SIZE)
     free(matrix);
 }
 
-
-
 TEST (TRANSPOSE, INCORRECT_SIZE)
 {
     size_t n_rows = 1;
@@ -44,8 +43,6 @@ TEST (TRANSPOSE, INCORRECT_SIZE)
     EXPECT_EQ(transpose(matrix, &n_rows, &n_columns), false);
     free(matrix);
 }
-
-
 
 TEST (TRANSPOSE, RESIZE)
 {
@@ -61,15 +58,12 @@ TEST (TRANSPOSE, RESIZE)
     free(matrix);
 }
 
-
 TEST (TRANSPOSE, EMPTY_DATA)
 {
     size_t n_rows = 1;
     size_t n_columns = 2;
     EXPECT_EQ(transpose(NULL, &n_rows, &n_columns), false);
 }
-
-
 
 TEST (TRANSPOSE, FUNCTIONAL)
 {
@@ -86,8 +80,6 @@ TEST (TRANSPOSE, FUNCTIONAL)
         EXPECT_DOUBLE_EQ(matrix[i], matrix_2x3_T[i]);
     free(matrix);
 }
-
-
 
 int main(int argc, char** argv)
 {

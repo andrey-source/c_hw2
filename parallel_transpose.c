@@ -118,8 +118,6 @@ bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
                 return(false);
             }
     }
-
-    printf("parallel");
     free(copy_matrix);
     free(pth);
     free(args_butch);

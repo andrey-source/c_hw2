@@ -57,13 +57,13 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 
-# add_executable(test_input test_input.cpp)
-# target_link_libraries(test_input input_lib ${GTEST_LIBRARIES} pthread)
+add_executable(test_input test_input.cpp)
+target_link_libraries(test_input input_lib ${GTEST_LIBRARIES} pthread)
 
 
-# add_executable(test_naive_transpose test_naive_transpose.cpp)
-# target_link_libraries(test_naive_transpose naive_transpose_lib ${GTEST_LIBRARIES} pthread)
+add_executable(test_naive_transpose test_naive_transpose.cpp)
+target_link_libraries(test_naive_transpose naive_transpose_lib ${GTEST_LIBRARIES} pthread)
 
 
-# add_executable(test_parallel_transpose test_parallel_transpose.cpp)
-# target_link_libraries(test_parallel_transpose dl ${GTEST_LIBRARIES} pthread)
+add_executable(test_parallel_transpose test_parallel_transpose.cpp)
+target_link_libraries(test_parallel_transpose dl ${GTEST_LIBRARIES} pthread)

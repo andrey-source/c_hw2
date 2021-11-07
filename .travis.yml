@@ -19,9 +19,24 @@ before_install:
 
 jobs:
   include:
+  - stage: StressTest
+    name: Naive_transpose
+    script:
+      - python3 create_test_data.py
+      - cmake -B build -Dparallel=0
+      - make -C build
+      - cd build
+      - ./hw2 <../test_data.txt
+    name: Parallel_transpose
+      - cmake -B build -Dparallel=1
+      - make -C build
+      - cd build
+      - ./hw2 <../test_data.txt
+
   - stage: Testing
     name: Cppcheck
-    script: cppcheck -j4 --inconclusive --error-exitcode=1 --language=c *.c *.h
+    script: 
+      - cppcheck -j4 --inconclusive --error-exitcode=1 --language=c *.c *.h
 
   - stage: TestCoverage
     script:

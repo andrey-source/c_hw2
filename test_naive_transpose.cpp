@@ -8,7 +8,7 @@
 
 extern "C"
 {
-    #include "transpose.h"
+    #include "naive_transpose.c"
 }
 
 

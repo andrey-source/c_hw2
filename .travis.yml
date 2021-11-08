@@ -37,7 +37,7 @@ jobs:
   - stage: TestCoverage
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
-      - make -C build
+      - make -C build all test
   - stage: Sanitaize
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
@@ -45,10 +45,13 @@ jobs:
   - stage: Valgrind
     script:
       - python3 create_test_data.py
-      - cmake -B build
+      - cmake -B build -Dparallel=0
       - make -C build
       - cd build
-      - valgrind --leak-check=full -q ./hw2 <../test_data.txt
+      - valgrind --leak-check=full ./hw2 <../test_data.txt
+      - cmake -Dparallel=1 ..
+      - make
+      - valgrind --leak-check=full ./hw2 <../test_data.txt
   - stage: Gtest
     script:
      - cmake -B build 

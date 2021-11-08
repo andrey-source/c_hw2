@@ -1,10 +1,11 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <dlfcn.h>
 #include <time.h>
 #include "input.h"
 #include "transpose.h"
+
+#define convert 1000000000
 
 
 
@@ -25,7 +26,7 @@ int main()
     bool flag_finish = clock_gettime(CLOCK_REALTIME, &finish);
     if (!flag_start && !flag_finish)
     {
-        size_t spent_time = 1000000000*(finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
+        size_t spent_time = convert *(finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
         printf("SPENT TIME: %lu ns \n", spent_time);
     }
     free(matrix);

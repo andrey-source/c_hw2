@@ -20,6 +20,14 @@ before_install:
 
 jobs:
   include:
+  - stage: Scan-build
+    script:
+      - mkdir build
+      - cd build
+      - scan-build cmake -Dparallel=0 ..
+      - scan-build make
+      - scan-build cmake -Dparallel=1 ..
+      - scan-build make
   - stage: CppLint
     script:
       - cpplint src/*

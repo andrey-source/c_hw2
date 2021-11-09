@@ -21,19 +21,19 @@ jobs:
   include:
   - stage: SANITIZERS
     script:
-      - cmake -B build -DADDRESS_SANITIZER=1
+      - cmake -B build -DADDRESS_SANITIZER=1 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=1 -DTHREAD_SANITIZER=0 -Dparallel=0
       - make -C build
       - cd build
-      - ctest
-      - cmake -DUNDEFINED_SANITIZER=1 ..
-      - make 
-      - ctest
-      - cmake -DTHREAD_SANITIZER=1 ..
+      - make all test
+      - cmake -DADDRESS_SANITIZER=1 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=1 -DTHREAD_SANITIZER=0 -Dparallel=1 ..
       - make
-      - ctest
-      - cmake -DLEAK_SANITIZER=1 ..
+      - make all test
+      - cmake -DADDRESS_SANITIZER=0 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=0 -DTHREAD_SANITIZER=1 -Dparallel=0 ..
       - make
-      - ctest
+      - make all test
+      - cmake -DADDRESS_SANITIZER=0 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=0 -DTHREAD_SANITIZER=1 -Dparallel=1 ..
+      - make
+      - make all test
   - stage: StressTest
     script:
       - python3 create_test_data.py

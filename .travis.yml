@@ -25,13 +25,13 @@ jobs:
       - make -C build
       - cd build
       - ctest
-      - cmake -DUNDEFINED_SANITIZER=1
+      - cmake -DUNDEFINED_SANITIZER=1 ..
       - make 
       - ctest
-      - cmake -DTHREAD_SANITIZER=1
+      - cmake -DTHREAD_SANITIZER=1 ..
       - make
       - ctest
-      - cmake -DLEAK_SANITIZER=1
+      - cmake -DLEAK_SANITIZER=1 ..
       - make
       - ctest
   - stage: StressTest

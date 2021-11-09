@@ -1,0 +1,91 @@
+os: linux
+dist: focal
+
+addons:
+  apt:
+    packages: lcov
+    
+language: cpp
+
+before_install:
+- sudo apt-get update
+- sudo apt-get install cppcheck
+- pip install cpplint
+- sudo apt-get install --yes libgtest-dev
+- sudo apt-get install --yes gcovr
+- sudo apt-get install valgrind
+- sudo apt-get install python3-pip
+- sudo pip install numpy
+
+
+jobs:
+  include:
+  - stage: Scan-build
+    script:
+      - mkdir build
+      - cd build
+      - scan-build cmake -Dparallel=0 ..
+      - scan-build make
+      - scan-build cmake -Dparallel=1 ..
+      - scan-build make
+  - stage: CppLint
+    script:
+      - cpplint src/*
+      - cpplint include/*
+      - cpplint tests/*
+  - stage: SANITIZERS
+    script:
+      - cmake -B build -DADDRESS_SANITIZER=1 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=1 -DTHREAD_SANITIZER=0 -Dparallel=0
+      - make -C build
+      - cd build
+      - make all test
+      - cmake -DADDRESS_SANITIZER=1 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=1 -DTHREAD_SANITIZER=0 -Dparallel=1 ..
+      - make
+      - make all test
+      - cmake -DADDRESS_SANITIZER=0 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=0 -DTHREAD_SANITIZER=1 -Dparallel=0 ..
+      - make
+      - make all test
+      - cmake -DADDRESS_SANITIZER=0 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=0 -DTHREAD_SANITIZER=1 -Dparallel=1 ..
+      - make
+      - make all test
+  - stage: StressTest
+    script:
+      - python3 create_test_data.py
+      - cmake -B build -Dparallel=0
+      - make -C build
+      - cd build
+      - ./hw2 <../test_data.txt
+      - cmake -Dparallel=1 ..
+      - make
+      - ./hw2 <../test_data.txt
+  - stage: Testing
+    name: Cppcheck
+    script: 
+      - cppcheck src
+      - cppcheck tests
+  - stage: TestCoverage
+    script:
+      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
+      - make -C build all test
+  - stage: Valgrind
+    script:
+      - python3 create_test_data.py
+      - cmake -B build -Dparallel=0
+      - make -C build
+      - cd build
+      - valgrind --leak-check=full ./hw2 <../test_data.txt
+      - cmake -Dparallel=1 ..
+      - make
+      - valgrind --leak-check=full ./hw2 <../test_data.txt
+  - stage: Gtest
+    script:
+     - cmake -B build 
+     - make -C build all test
+
+after_success:
+# Create lcov report
+- lcov --capture --directory . --output-file coverage.info
+- lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
+- lcov --list coverage.info # debug info
+# Uploading report to CodeCov
+- bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"

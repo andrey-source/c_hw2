@@ -2,16 +2,19 @@
 #include "input.h"
 
 
-bool input_size(size_t * n_rows, size_t * n_columns, FILE * stream) {
-    if (stream == stdin)
+bool input_size(size_t *n_rows, size_t *n_columns, FILE *stream) {
+    if (stream == stdin) {
         printf("Enter the number of rows\n");
+    }
     if (!fscanf(stream, "%lu", n_rows) || *n_rows > MAX_SIZE) {
         return false;
-    }
-    if (stream == stdin)
+        }
+    if (stream == stdin) {
         printf("Enter the number of columns\n");
-    if (!fscanf(stream, "%lu", n_columns) || *n_columns > MAX_SIZE)
+    }
+    if (!fscanf(stream, "%lu", n_columns) || *n_columns > MAX_SIZE) {
         return false;
+    }
     return true;
 }
 

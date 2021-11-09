@@ -7,8 +7,6 @@
 
 #define convert 1000000000
 
-
-
 int main() {
     double *matrix = NULL;
     size_t n_rows = 0;
@@ -23,7 +21,7 @@ int main() {
     }
     bool flag_finish = clock_gettime(CLOCK_REALTIME, &finish);
     if (!flag_start && !flag_finish) {
-        size_t spent_time = convert *(finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
+        size_t spent_time = convert * (finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
         printf("SPENT TIME: %lu ns \n", spent_time);
     }
     free(matrix);

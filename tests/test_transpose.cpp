@@ -27,6 +27,7 @@ TEST (TRANSPOSE, NULL_SIZE)
     size_t n_columns = 1;
     size_t size = n_rows * n_columns;
     double *matrix = (double*)malloc(size *sizeof(double));
+    ASSERT_NE(matrix, nullptr);
     for (size_t i = 0; i < size; i++)
         matrix[i] = i * 1.1;
     EXPECT_EQ(transpose(matrix, nullptr, &n_columns), false);
@@ -39,6 +40,7 @@ TEST (TRANSPOSE, INCORRECT_SIZE)
     size_t n_columns = 1;
     size_t size = n_rows * n_columns;
     double *matrix = (double*)malloc(size *sizeof(double));
+    ASSERT_NE(matrix, nullptr);
     for (size_t i = 0; i < size; i++)
         matrix[i] = i * 1.1;
     EXPECT_EQ(transpose(matrix, &n_rows, &n_columns), false);
@@ -51,6 +53,7 @@ TEST (TRANSPOSE, RESIZE)
     size_t n_columns = 1;
     size_t size = n_rows * n_columns;
     double *matrix = (double*)malloc(size *sizeof(double));
+    ASSERT_NE(matrix, nullptr);
     for (size_t i = 0; i < size; i++)
         matrix[i] = i * 1.1;
     ASSERT_EQ(transpose(matrix, &n_rows, &n_columns), true);
@@ -72,6 +75,7 @@ TEST (TRANSPOSE, FUNCTIONAL)
     size_t n_columns = 2;
     size_t size = n_rows * n_columns;
     double *matrix = (double*)malloc(size * sizeof(double));
+    ASSERT_NE(matrix, nullptr);
     for (size_t i = 0; i < size; i++)
     {
         matrix[i] = matrix_3x2[i];

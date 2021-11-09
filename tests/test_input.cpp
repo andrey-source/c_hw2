@@ -77,6 +77,7 @@ TEST (FILL_MATRIX, INCORRECT_DATA)
     size_t n_rows = 3;
     size_t n_columns = 2;
     double* matrix = (double*)malloc(n_rows * n_columns * sizeof(double));
+    ASSERT_NE(matrix, nullptr);
     FILE *stream = fopen("test.txt", "r");
     ASSERT_EQ(fill_matrix(matrix, n_rows, n_columns, stream), false);
     free(matrix);
@@ -92,6 +93,7 @@ TEST (FILL_MATRIX, INCORRECT_TYPE_DATA)
     size_t n_rows = 3;
     size_t n_columns = 2;
     double* matrix = (double*)malloc(n_rows * n_columns * sizeof(double));
+    ASSERT_NE(matrix, nullptr);
     FILE *stream = fopen("test.txt", "r");
     EXPECT_EQ(fill_matrix(matrix, n_rows, n_columns, stream), false);
     free(matrix);
@@ -106,9 +108,9 @@ TEST (FILL_MATRIX, INCORRECT_SIZE_DATA)
     test_file.open("test.txt");
     for (size_t i = 0; i < n_rows * n_columns - 1; i++)
         test_file << i * 1.1 << std::endl;
-
     test_file.close();
     double* matrix = (double*)malloc(n_rows * n_columns * sizeof(double));
+    ASSERT_NE(matrix, nullptr);
     FILE *stream = fopen("test.txt", "r");
     EXPECT_EQ(fill_matrix(matrix, n_rows, n_columns, stream), false);
     test_file.open("test.txt");
@@ -129,6 +131,7 @@ TEST (FILL_MATRIX, CHECK_VALUES)
         test_file << i * 1.1 << std::endl;
     test_file.close();
     double* matrix = (double*)malloc(n_rows * n_columns * sizeof(double));
+    ASSERT_NE(matrix, nullptr);
     FILE *stream = fopen("test.txt", "r");    
     ASSERT_EQ(fill_matrix(matrix, n_rows, n_columns, stream), true);
     for (size_t i = 0; i < n_rows * n_columns; i++)

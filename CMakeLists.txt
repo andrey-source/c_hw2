@@ -14,8 +14,12 @@ add_compile_options(-pthread)
 add_link_options(-pthread)
 
 
+option(ADDRESS_SANITIZER "Add address sanitizer")
+option(UNDEFINED_SANITIZER "Add undefined sanitizer")
+option(THREAD_SANITIZER "Add thread sanitizer")
+option(LEAK_SANITIZER "Add leak sanitizer")
+
 option(WITH_COVERAGE "Add coverage estimation")
-option(WITH_SANITIZERS "Add address sanitizer")
 option(parallel "Parallel calculate")
 
 if(WITH_COVERAGE)
@@ -24,12 +28,22 @@ if(WITH_COVERAGE)
 endif()
 
 
-if(WITH_SANITIZERS)
+if(ADDRESS_SANITIZER)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)
 endif()
-
-
+if(UNDEFINED_SANITIZER)
+    add_compile_options(-fsanitize=undefined)
+    add_link_options(-fsanitize=undefined)
+endif()
+if(THREAD_SANITIZER)
+    add_compile_options(-fsanitize=thread)
+    add_link_options(-fsanitize=thread)
+endif()
+if(LEAK_SANITIZER)
+    add_compile_options(-fsanitize=leak)
+    add_link_options(-fsanitize=leak)
+endif()
 
 add_library(input_lib STATIC src/input.c)
 target_include_directories(input_lib PUBLIC include)

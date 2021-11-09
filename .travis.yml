@@ -19,6 +19,21 @@ before_install:
 
 jobs:
   include:
+  - stage: SANITIZERS
+    script:
+      - cmake -B build -DADDRESS_SANITIZER=1
+      - make -C build
+      - cd build
+      - ctest
+      - cmake -DUNDEFINED_SANITIZER=1
+      - make 
+      - ctest
+      - cmake -DTHREAD_SANITIZER=1
+      - make
+      - ctest
+      - cmake -DLEAK_SANITIZER=1
+      - make
+      - ctest
   - stage: StressTest
     script:
       - python3 create_test_data.py
@@ -38,10 +53,6 @@ jobs:
     script:
       - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
       - make -C build all test
-  - stage: Sanitaize
-    script:
-      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
-      - make -C build
   - stage: Valgrind
     script:
       - python3 create_test_data.py

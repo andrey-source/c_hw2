@@ -3,9 +3,7 @@
 
 
 
-bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
-{
-   
+bool transpose(double * matrix, size_t *n_rows, size_t *n_columns) {
     if (!n_rows || !n_columns || !matrix)
         return false;
 
@@ -18,10 +16,10 @@ bool transpose(double * matrix, size_t *n_rows, size_t *n_columns)
         return false;
 
     memcpy(copy_matrix, matrix, size * sizeof(double));
-    for (size_t i = 0; i < *n_rows; i++)
-    {
-        for (size_t j = 0; j < *n_columns; j++)
-           matrix[j * *n_rows + i] = copy_matrix[i * *n_columns + j]; 
+    for (size_t i = 0; i < *n_rows; i++) {
+        for (size_t j = 0; j < *n_columns; j++) {
+           matrix[j * *n_rows + i] = copy_matrix[i * *n_columns + j];
+        }
     }
     free(copy_matrix);
     size_t temp = *n_rows;

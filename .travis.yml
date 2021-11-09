@@ -10,6 +10,7 @@ language: cpp
 before_install:
 - sudo apt-get update
 - sudo apt-get install cppcheck
+- pip install cpplint
 - sudo apt-get install --yes libgtest-dev
 - sudo apt-get install --yes gcovr
 - sudo apt-get install valgrind
@@ -19,6 +20,11 @@ before_install:
 
 jobs:
   include:
+  - stage: CppLint
+    script:
+      - cpplint src/*
+      - cpplint include/*
+      - cpplint tests/*
   - stage: SANITIZERS
     script:
       - cmake -B build -DADDRESS_SANITIZER=1 -DUNDEFINED_SANITIZER=1 -DLEAK_SANITIZER=1 -DTHREAD_SANITIZER=0 -Dparallel=0

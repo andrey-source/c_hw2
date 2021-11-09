@@ -1,19 +1,18 @@
 #include <fstream>
-#include <gtest/gtest.h>
-#include <stdio.h>
-#include <string.h>
+#include "gtest/gtest.h"
+#include "stdio.h"
+#include "string.h"
 
 
 
 
-extern "C"
-{
+extern "C" {
     #include "transpose.h"
 }
 
 
 double matrix_3x2[6] = {1.1, 2.2,
-                        3.3, 4.4, 
+                        3.3, 4.4,
                         5.5, 6.6};
 
 double matrix_2x3_T[6] = {1.1, 3.3, 5.5,
@@ -21,8 +20,7 @@ double matrix_2x3_T[6] = {1.1, 3.3, 5.5,
 
 
 
-TEST (TRANSPOSE, NULL_SIZE)
-{
+TEST(TRANSPOSE, NULL_SIZE) {
     size_t n_rows = 1;
     size_t n_columns = 1;
     size_t size = n_rows * n_columns;
@@ -34,8 +32,7 @@ TEST (TRANSPOSE, NULL_SIZE)
     free(matrix);
 }
 
-TEST (TRANSPOSE, INCORRECT_SIZE)
-{
+TEST(TRANSPOSE, INCORRECT_SIZE) {
     size_t n_rows = 1;
     size_t n_columns = 1;
     size_t size = n_rows * n_columns;
@@ -47,8 +44,7 @@ TEST (TRANSPOSE, INCORRECT_SIZE)
     free(matrix);
 }
 
-TEST (TRANSPOSE, RESIZE)
-{
+TEST(TRANSPOSE, RESIZE) {
     size_t n_rows = 2;
     size_t n_columns = 1;
     size_t size = n_rows * n_columns;
@@ -62,22 +58,19 @@ TEST (TRANSPOSE, RESIZE)
     free(matrix);
 }
 
-TEST (TRANSPOSE, EMPTY_DATA)
-{
+TEST(TRANSPOSE, EMPTY_DATA) {
     size_t n_rows = 1;
     size_t n_columns = 2;
     EXPECT_EQ(transpose(NULL, &n_rows, &n_columns), false);
 }
 
-TEST (TRANSPOSE, FUNCTIONAL)
-{
+TEST(TRANSPOSE, FUNCTIONAL) {
     size_t n_rows = 3;
     size_t n_columns = 2;
     size_t size = n_rows * n_columns;
     double *matrix = (double*)malloc(size * sizeof(double));
     ASSERT_NE(matrix, nullptr);
-    for (size_t i = 0; i < size; i++)
-    {
+    for (size_t i = 0; i < size; i++) {
         matrix[i] = matrix_3x2[i];
     }
     ASSERT_EQ(transpose(matrix, &n_rows, &n_columns), true);
@@ -86,8 +79,7 @@ TEST (TRANSPOSE, FUNCTIONAL)
     free(matrix);
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

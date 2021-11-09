@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdio.h>
 #include <stdbool.h>
 #define MAX_SIZE 10000

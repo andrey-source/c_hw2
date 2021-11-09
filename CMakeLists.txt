@@ -3,10 +3,9 @@ project(hw2 C)
 project(tests CXX)
 
 
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(THREADS_PREFER_PTHREAD_FLAG ON)
+set(CMAKE_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
 
 add_compile_options(-Wall -Wextra -pedantic)
 
